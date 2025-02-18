@@ -12,26 +12,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/meetings")
 public class MeetingController {
-    @Autowired
-    private MeetingApplicationService meetingApplicationService;
+  @Autowired private MeetingApplicationService meetingApplicationService;
 
-    @PostMapping("/book")
-    public Meeting bookMeeting(@RequestParam String title,
-                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
-                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime,
-                               @RequestParam Long roomId,
-                               @RequestParam Long userId,
-                               @RequestParam boolean isHosted) {
-        return meetingApplicationService.bookMeeting(title, startTime, endTime, roomId, userId, isHosted);
-    }
+  @PostMapping("/book")
+  public Meeting bookMeeting(
+      @RequestParam String title,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime,
+      @RequestParam Long roomId,
+      @RequestParam Long userId,
+      @RequestParam boolean isHosted) {
+    return meetingApplicationService.bookMeeting(
+        title, startTime, endTime, roomId, userId, isHosted);
+  }
 
-    @GetMapping("/user/{userId}")
-    public List<Meeting> getMeetingsByUser(@PathVariable Long userId) {
-        return meetingApplicationService.getMeetingsByUser(userId);
-    }
+  @GetMapping("/user/{userId}")
+  public List<Meeting> getMeetingsByUser(@PathVariable Long userId) {
+    return meetingApplicationService.getMeetingsByUser(userId);
+  }
 
-    @GetMapping("/user/{userId}/optimal")
-    public List<Meeting> getOptimalMeetings(@PathVariable Long userId) {
-        return meetingApplicationService.getOptimalMeetings(userId);
-    }
+  @GetMapping("/user/{userId}/optimal")
+  public List<Meeting> getOptimalMeetings(@PathVariable Long userId) {
+    return meetingApplicationService.getOptimalMeetings(userId);
+  }
 }

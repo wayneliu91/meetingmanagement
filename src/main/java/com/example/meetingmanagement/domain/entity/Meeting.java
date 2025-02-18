@@ -13,22 +13,29 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 public class Meeting {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String title;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private boolean isHosted;
-    private Long roomId;
-    private Long userId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public Meeting(String title, LocalDateTime startTime, LocalDateTime endTime, boolean isHosted, Long roomId, Long userId) {
-        this.title = title;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.isHosted = isHosted;
-        this.roomId = roomId;
-        this.userId = userId;
-    }
+  private String title;
+  private LocalDateTime startTime;
+  private LocalDateTime endTime;
+  private boolean isHosted;
+  private Long roomId;
+  private Long userId;
+
+  public Meeting(
+      String title,
+      LocalDateTime startTime,
+      LocalDateTime endTime,
+      boolean isHosted,
+      Long roomId,
+      Long userId) {
+    this.title = title;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.isHosted = isHosted;
+    this.roomId = roomId;
+    this.userId = userId;
+  }
 }

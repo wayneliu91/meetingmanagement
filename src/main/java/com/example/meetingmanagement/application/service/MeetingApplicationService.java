@@ -13,32 +13,35 @@ import java.util.List;
 
 @Service
 public class MeetingApplicationService {
-    @Autowired
-    private MeetingRepository meetingRepository;
-    @Autowired
-    private RoomRepository roomRepository;
-    @Autowired
-    private MeetingDomainService meetingDomainService;
+  @Autowired private MeetingRepository meetingRepository;
+  @Autowired private RoomRepository roomRepository;
+  @Autowired private MeetingDomainService meetingDomainService;
 
-    public Meeting bookMeeting(String title, LocalDateTime startTime, LocalDateTime endTime, Long roomId, Long userId, boolean isHosted) {
-        Room room = roomRepository.findById(roomId).orElse(null);
-        if (room == null) {
-            return null;
-        }
-        List<Meeting> existingMeetings = meetingRepository.findByRoomId(roomId);
-        if (!meetingDomainService.isRoomAvailable(room, startTime, endTime, existingMeetings)) {
-            return null;
-        }
-        Meeting meeting = new Meeting(title, startTime, endTime, isHosted, roomId, userId);
-        return meetingRepository.save(meeting);
+  public Meeting bookMeeting(
+      String title,
+      LocalDateTime startTime,
+      LocalDateTime endTime,
+      Long roomId,
+      Long userId,
+      boolean isHosted) {
+    Room room = roomRepository.findById(roomId).orElse(null);
+    if (room == null) {
+      return null;
     }
+    List<Meeting> existingMeetings = meetingRepository.findByRoomId(roomId);
+    if (!meetingDomainService.isRoomAvailable(room, startTime, endTime, existingMeetings)) {
+      return null;
+    }
+    Meeting meeting = new Meeting(title, startTime, endTime, isHosted, roomId, userId);
+    return meetingRepository.save(meeting);
+  }
 
-    public List<Meeting> getMeetingsByUser(Long userId) {
-        return meetingRepository.findByUserId(userId);
-    }
+  public List<Meeting> getMeetingsByUser(Long userId) {
+    return meetingRepository.findByUserId(userId);
+  }
 
-    public List<Meeting> getOptimalMeetings(Long userId) {
-        List<Meeting> allMeetings = meetingRepository.findByUserId(userId);
-        return meetingDomainService.getOptimalMeetings(allMeetings);
-    }
+  public List<Meeting> getOptimalMeetings(Long userId) {
+    List<Meeting> allMeetings = meetingRepository.findByUserId(userId);
+    return meetingDomainService.getOptimalMeetings(allMeetings);
+  }
 }
